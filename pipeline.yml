@@ -22,7 +22,7 @@ parameters:
 
 variables:
 - name: action
-  value: deploy
+  value: destroy
 
 steps:
 - task: AWSShellScript@1
