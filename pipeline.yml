@@ -1,0 +1,79 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+- name: action 
+  displayName: Accion a ejecutar 
+  type: string 
+  default: deploy 
+  values: 
+  - deploy 
+  - destroy
+
+ 
+
+variables:
+- name: action
+  value: deploy
+
+steps:
+- task: AWSShellScript@1
+  displayName: 'iniciar terraform'
+  inputs:
+    awsCredentials: 'Service-Conection-Alex'
+    regionName: 'us-east-1'
+    scriptType: 'inline'
+    disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    inlineScript: 'terraform init'
+
+#- ${{ if eq(variables.action, 'deploy') }}:
+
+- task: AWSShellScript@1
+  displayName: 'terraform plan'
+  condition: eq(variables['action'], 'deploy')
+  inputs:
+    awsCredentials: 'Service-Conection-Alex'
+    regionName: 'us-east-1'
+    scriptType: 'inline'
+    disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    inlineScript: 'terraform plan -var-file="variables.dev.tfvars"'
+
+ 
+
+- task: AWSShellScript@1
+  displayName: 'terraform apply'
+  condition: eq(variables['action'], 'deploy')
+  inputs:
+    awsCredentials: 'Service-Conection-Alex'
+    regionName: 'us-east-1'
+    scriptType: 'inline'
+    disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    inlineScript: 'terraform apply -var-file="variables.dev.tfvars" -auto-approve'
+
+ 
+
+#- ${{ if eq(variables.action, 'destroy') }}:    
+
+ 
+
+- task: AWSShellScript@1
+  displayName: 'finalizar con terraform'
+  condition: eq(variables['action'], 'destroy')
+  inputs:
+    awsCredentials: 'Service-Conection-Alex'
+    regionName: 'us-east-1'
+    scriptType: 'inline'
+    disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    inlineScript: 'terraform destroy -var-file="variables.dev.tfvars" -auto-approve'
