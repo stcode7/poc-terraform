@@ -13,7 +13,7 @@ parameters:
 - name: action 
   displayName: Accion a ejecutar 
   type: string 
-  default: destroy 
+  default: deploy 
   values: 
   - deploy 
   - destroy
