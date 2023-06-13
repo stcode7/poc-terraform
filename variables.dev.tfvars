@@ -19,8 +19,8 @@ tags_vpc = {
   }
 
 tags_ec2 = {
-    Name = "ec2_base"
-    Entorno = "Desarrollo"
+    Name = "ec2_base2"
+    Entorno = "Desarrollo2"
   }
 
 tags_public_subnet1 = {
@@ -48,7 +48,7 @@ tags_private_subnet2 = {
 # Variables de entrada para creacion de la instancia EC2
 
 ami= "ami-0715c1897453cabd1"
-type_instance = "t3.micro"
+type_instance = "t3.small"
 volume_size = "8"
 volume_type = "gp2"
 
