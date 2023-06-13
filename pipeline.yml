@@ -13,7 +13,7 @@ parameters:
 - name: action 
   displayName: Accion a ejecutar 
   type: string 
-  default: deploy 
+  default: destroy
   values: 
   - deploy 
   - destroy
@@ -22,7 +22,7 @@ parameters:
 
 variables:
 - name: action
-  value: deploy
+  value: destroy
 
 steps:
 - task: AWSShellScript@1
