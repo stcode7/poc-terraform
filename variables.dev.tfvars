@@ -49,6 +49,6 @@ tags_private_subnet2 = {
 
 ami= "ami-0715c1897453cabd1"
 type_instance = "t3.small"
-volume_size = "10"
+volume_size = "8"
 volume_type = "gp2"
 
